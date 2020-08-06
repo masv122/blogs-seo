@@ -48,27 +48,23 @@
         <div class="row">
             <div class="col-md-8 blog-main">
                 <?php
-                try {
-                $conexion = mysqli_connect("localhost", "root", "", "pradiant_blog");
-                    if(!$conexion){
-                        echo "la conexion ha fallado: " . mysqli_error();
-                        exit();
-                    }
-                    $consulta = "SELECT * FROM posts ORDER BY fecha DESC";
-                    $resultado = mysqli_query($conexion, $consulta);
-                    if($resultado){
-                        while($registro = mysqli_fetch_assoc($resultado)){
-                            echo "<div class='card bg-white shadow mb-3'>
+try {
+    require "modelo/conexion.php";
+    $consulta = "SELECT * FROM posts ORDER BY fecha DESC";
+    $resultado = mysqli_query($conexion, $consulta);
+    if ($resultado) {
+        while ($registro = mysqli_fetch_assoc($resultado)) {
+            echo "<div class='card bg-white shadow mb-3'>
                                  <div class='card-body'>
                                     <h2 class='blog-post-title'>" . $registro["titulo"] . "</h2>
                                     <div class='d-flex'>
-                                        <p class='blog-post-meta mr-3'><i class='fas fa-clock    '></i>" . $registro["resumen"] . "</p>
-                                        <p class='blog-post-meta mr-3'><i class='fa fa-user' aria-hidden='true'></i> Fulanito</p>
-                                        <p class='blog-post-meta mr-3'><i class='fa fa-folder' aria-hidden='true'></i>" . $registro["categoria"] . "</p>
-                                        <p class='blog-post-meta mr-3'><i class='fa fa-comment' aria-hidden='true'></i> Comentarios
+                                        <p class='blog-post-meta mr-2'><i class='fas fa-clock    '></i> " . $registro["fecha"] . "</p>
+                                        <p class='blog-post-meta mr-2'><i class='fa fa-user' aria-hidden='true'></i> Fulanito</p>
+                                        <p class='blog-post-meta mr-2'><i class='fa fa-folder' aria-hidden='true'></i> " . $registro["categoria"] . "</p>
+                                        <p class='blog-post-meta mr-2'><i class='fa fa-comment' aria-hidden='true'></i> Comentarios
                                         </p>
                                     </div>
-            
+
                                     <div class='container'>
                                         <div class='row'>
                                             <div class='col-6 border'>
@@ -79,7 +75,7 @@
                                             </div>
                                         </div>
                                     </div>
-            
+
                                 </div>
                                 <div class='card-footer text-muted'>
                                     <a name='asdasd' id='asdasd' class='btn btn-dark float-right' href='" . $registro["direccion"] . "'
@@ -89,26 +85,26 @@
                                         post <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
                                 </div>
                             </div>";
-                        }
-                    }
-                } catch (\Throwable $th) {
-                    echo"error";
-                } 
-                ?>
+        }
+    }
+} catch (\Throwable $th) {
+    echo "ha ocurrido un error: " . $th;
+}
+?>
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
-                            <a class="page-link" href="#" aria-label="Previous">
+                            <a class="page-link" href="#" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
+                                <span class="sr-only">Anterior</span>
                             </a>
                         </li>
                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                            <a class="page-link" href="#" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
+                                <span class="sr-only">Siguiente</span>
                             </a>
                         </li>
                     </ul>
@@ -121,11 +117,12 @@
                         <i class="fa fa-search" aria-hidden="true"></i> Busqueda
                     </div>
                     <div class="card-body">
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="text"
+                        <form action="busqueda.php" method="get" class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="text" name="busqueda"
                                 placeholder="Escriba la entrada que desee consultar">
-                            <a class="btn btn-outline-success my-2 my-sm-0" type="submit" role="button"
-                                href="busqueda.html"><i class="fa fa-search" aria-hidden="true"></i> Buscar</a>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i value="buscar"
+                                    class="fa fa-search" aria-hidden="true"></i>
+                                Buscar</button>
                         </form>
                     </div>
                 </div>
@@ -135,20 +132,29 @@
                         <i class="fa fa-folder" aria-hidden="true"></i> Categorias
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <ol class="list-unstyled mb-0">
-                                    <li><a href="categoria.html"></a>Asesoria</li>
-                                    <li><a href="categoria.html">-Administración</a></li>
-                                </ol>
-                            </div>
-                            <div class="col-6">
-                                <ol class="list-unstyled mb-0">
-                                    <li><a href="#">Categoria 4</a></li>
-                                    <li><a href="#">Categoria 5</a></li>
-                                </ol>
-                            </div>
-                        </div>
+                        <ol class="list-unstyled mb-0">
+                            <?php
+try {
+    require "modelo/conexion.php";
+    $consulta = "SELECT * FROM categorias";
+    $resultado = mysqli_query($conexion, $consulta);
+    if ($resultado) {
+        while ($registro = mysqli_fetch_assoc($resultado)) {
+            echo "
+                <li>
+                <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0'>
+                <button name='categoria' value='" . $registro["nombre"] . "' class='btn btn-block btn-outline-info mb-1' type='submit'>
+                        " . $registro["nombre"] . "</button>
+                </form>
+                </li>
+            ";
+        }
+    }
+} catch (\Throwable $th) {
+    echo "ha ocurrido un error: " . $th;
+}
+?>
+                        </ol>
                     </div>
                 </div>
                 <div class="card mb-3">
