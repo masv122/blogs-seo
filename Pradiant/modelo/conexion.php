@@ -1,7 +1,4 @@
 <?php
-$conexion = mysqli_connect("localhost", "root", "", "pradiant_blog");
-if (!$conexion) {
-    echo "la conexion ha fallado: " . mysqli_error();
-    exit();
-}
-mysqli_set_charset($conexion, "utf8");
+$conexion = new PDO("mysql:host=localhost; dbname=pradiant_blog", "root", "");
+$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conexion->exec("SET CHARACTER SET utf8");

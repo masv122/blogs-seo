@@ -51,11 +51,10 @@
                     <div class="card-body">
                         <h2 class="blog-post-title">Busqueda</h2>
                         <?php
-require "modelo/conexion.php";
-$busqueda = mysqli_real_escape_string($conexion, $_GET["busqueda"]);
+$busqueda = $_GET["busqueda"];
 echo "<form action='busqueda.php' method='get' class='form-inline my-2 my-lg-0'>
 <input class='form-control mr-sm-2' type='text' name='busqueda'
-    placeholder='Escriba la entrada que desee consultar'>
+    value='" . $busqueda . "'>
 <button class='btn btn-outline-success my-2 my-sm-0' type='submit'><i value='buscar'
         class='fa fa-search' aria-hidden='true'></i>
     Buscar</button>
@@ -64,10 +63,16 @@ echo "<form action='busqueda.php' method='get' class='form-inline my-2 my-lg-0'>
 
                 </div>";
 try {
+    require "modelo/conexion.php";
     $consulta = "SELECT * FROM posts WHERE titulo LIKE '%$busqueda%'";
-    $resultado = mysqli_query($conexion, $consulta);
-    if ($resultado) {
-        while ($registro = mysqli_fetch_assoc($resultado)) {
+    $resultado = $conexion->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $resultado = $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $resultado = $conexion->prepare($consulta);
+    $resultado->bindParam(':busqueda', $busqueda, PDO::PARAM_STR, 20);
+    $resultado->execute(array());
+    $num_filas = $resultado->rowCount();
+    if ($num_filas > 0) {
+        while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
             echo "<div class='card bg-white shadow mb-3'>
             <div class='card-body'>
                <h2 class='blog-post-title'>" . $registro["titulo"] . "</h2>
@@ -101,7 +106,10 @@ try {
        </div>";
         }
     } else {
-        echo "nada por aqui";
+        echo "<div class='jumbotron bg-white shadow'>
+            <h1 class='display-4'>Upss... Nada por aqui.</h1>
+            <p class='lead'>Intenta con otra palabra clave.</p>
+        </div>";
     }
 } catch (\Throwable $th) {
     echo "ha ocurrido un error: " . $th;

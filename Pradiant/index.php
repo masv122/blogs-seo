@@ -12,9 +12,9 @@
 
 <body>
     <nav class="navbar navbar-expand-sm navbar-light bg-white">
-        <a class="navbar-brand" href="#">
-            <img src="assets/PRADIANT.png" width="50" height="50" alt="">
-            Pradiant Análisis y Consultoria
+        <a class="navbar-brand d-flex" href="#">
+            <img src="assets/PRADIANT.png" width="50" height="50" alt="" class="mr-3">
+            <h2>Pradiant Análisis y Consultoria</h2>
         </a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
@@ -50,17 +50,20 @@
                 <?php
 try {
     require "modelo/conexion.php";
-    $consulta = "SELECT * FROM posts ORDER BY fecha DESC";
-    $resultado = mysqli_query($conexion, $consulta);
-    if ($resultado) {
-        while ($registro = mysqli_fetch_assoc($resultado)) {
+    $consulta = "SELECT posts.*, categorias.nombre FROM posts LEFT JOIN categorias ON (posts.categoria = categorias.id) ORDER BY fecha DESC LIMIT 0,3";
+    $resultado = $conexion->prepare($consulta);
+    echo $resultado;
+    $resultado->execute(array());
+    $num_filas = $resultado->rowCount();
+    if ($num_filas > 0) {
+        while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
             echo "<div class='card bg-white shadow mb-3'>
                                  <div class='card-body'>
                                     <h2 class='blog-post-title'>" . $registro["titulo"] . "</h2>
                                     <div class='d-flex'>
                                         <p class='blog-post-meta mr-2'><i class='fas fa-clock    '></i> " . $registro["fecha"] . "</p>
                                         <p class='blog-post-meta mr-2'><i class='fa fa-user' aria-hidden='true'></i> Fulanito</p>
-                                        <p class='blog-post-meta mr-2'><i class='fa fa-folder' aria-hidden='true'></i> " . $registro["categoria"] . "</p>
+                                        <p class='blog-post-meta mr-2'><i class='fa fa-folder' aria-hidden='true'></i> " . $registro["nombre"] . "</p>
                                         <p class='blog-post-meta mr-2'><i class='fa fa-comment' aria-hidden='true'></i> Comentarios
                                         </p>
                                     </div>
@@ -80,12 +83,21 @@ try {
                                 <div class='card-footer text-muted'>
                                     <a name='asdasd' id='asdasd' class='btn btn-dark float-right' href='" . $registro["direccion"] . "'
                                         role='button'>
-                                        Ir
-                                        al
+                                        Leer mas
                                         post <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
                                 </div>
                             </div>";
         }
+    } else {
+        echo "<div class='jumbotron'>
+            <h1 class='display-3'>Sin publicaciones</h1>
+            <p class='lead'>Jumbo helper text</p>
+            <hr class='my-2'>
+            <p>More info</p>
+            <p class='lead'>
+                <a class='btn btn-primary btn-lg' href='Jumbo action link' role='button'>Jumbo action name</a>
+            </p>
+        </div>";
     }
 } catch (\Throwable $th) {
     echo "ha ocurrido un error: " . $th;
@@ -137,9 +149,10 @@ try {
 try {
     require "modelo/conexion.php";
     $consulta = "SELECT * FROM categorias";
-    $resultado = mysqli_query($conexion, $consulta);
-    if ($resultado) {
-        while ($registro = mysqli_fetch_assoc($resultado)) {
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(array());
+    if ($resultado->rowCount() > 0) {
+        while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
             echo "
                 <li>
                 <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0'>
@@ -149,6 +162,10 @@ try {
                 </li>
             ";
         }
+    } else {
+        echo "<div class='alert alert-success' role='alert'>
+          <h4 class='alert-heading'>Sin categorias</h4>
+        </div>";
     }
 } catch (\Throwable $th) {
     echo "ha ocurrido un error: " . $th;
