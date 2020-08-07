@@ -4,24 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/all.min.css">
     <title>Pradiant blog</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="/assets/PRADIANT.png" width="80" height="60" alt="">
+    <nav class="navbar navbar-expand-sm navbar-dark fondo-marca">
+        <a class="navbar-brand d-flex" href="#">
+            <img src="../assets/PRADIANT.png" width="50" height="50" alt="" class="mr-3">
+            <h2>Pradiant Análisis y Consultoria</h2>
         </a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">   Inicio</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#">   Web <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Categoria 1</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -31,7 +37,7 @@
                         <a class="dropdown-item" href="#">Accion 1</a>
                         <a class="dropdown-item" href="#">Accion 2</a>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </nav>
@@ -96,42 +102,58 @@
 
             <aside class="col-md-4 blog-sidebar">
                 <div class="card mb-3">
-                    <div class="card-header">
-                        Busqueda
+                  <div class="card-header text-white fondo-marca">
+                        <i class="fa fa-search" aria-hidden="true"></i> Busqueda
                     </div>
                     <div class="card-body">
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Busqueda">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                        <form action="busqueda.php" method="get" class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="text" name="busqueda"
+                                placeholder="Escriba la entrada que desee consultar">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i value="buscar"
+                                    class="fa fa-search" aria-hidden="true"></i>
+                                Buscar</button>
                         </form>
                     </div>
                 </div>
 
                 <div class="card mb-3">
-                    <div class="card-header">
-                        Categorias
+                  <div class="card-header text-white fondo-marca">
+                        <i class="fa fa-folder" aria-hidden="true"></i> Categorias
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <ol class="list-unstyled mb-0">
-                                    <li><a href="#">Categoria 1</a></li>
-                                    <li><a href="#">Categoria 2</a></li>
-                                    <li><a href="#">Categoria 3</a></li>
-                                </ol>
-                            </div>
-                            <div class="col-6">
-                                <ol class="list-unstyled mb-0">
-                                    <li><a href="#">Categoria 4</a></li>
-                                    <li><a href="#">Categoria 5</a></li>
-                                </ol>
-                            </div>
-                        </div>
+                        <ol class="list-unstyled mb-0">
+                            <?php
+try {
+    require "../modelo/conexion.php";
+    $consulta = "SELECT * FROM categorias";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(array());
+    if ($resultado->rowCount() > 0) {
+        while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
+            echo "
+                <li>
+                <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0'>
+                <button name='categoria' value='" . $registro["nombre"] . "' class='btn btn-block btn-outline-info mb-1' type='submit'>
+                        " . $registro["nombre"] . "</button>
+                </form>
+                </li>
+            ";
+        }
+    } else {
+        echo "<div class='alert alert-success' role='alert'>
+          <h4 class='alert-heading'>Sin categorias</h4>
+        </div>";
+    }
+} catch (\Throwable $th) {
+    echo "ha ocurrido un error: " . $th;
+}
+?>
+                        </ol>
                     </div>
                 </div>
                 <div class="card mb-3">
-                    <div class="card-header">
-                        Recomendados
+                  <div class="card-header text-white fondo-marca">
+                        <i class="fa fa-star" aria-hidden="true"></i> Recomendados
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Post 1</li>
@@ -141,14 +163,14 @@
                 </div>
 
                 <div class="card mb-3">
-                    <div class="card-header">
-                        Buscanos en nuestras redes
+                  <div class="card-header text-white fondo-marca">
+                        <i class="fa fa-heart" aria-hidden="true"></i> Buscanos en nuestras redes
                     </div>
                     <div class="card-body">
                         <ol class="list-unstyled">
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#"><i class="fab fa-instagram    "></i> Instagram</a></li>
+                            <li><a href="#"><i class="fab fa-twitter    "></i> Twitter</a></li>
+                            <li><a href="#"><i class="fab fa-facebook    "></i> Facebook</a></li>
                         </ol>
                     </div>
                 </div>
@@ -165,8 +187,8 @@
             <a href="#">Volver arriba</a>
         </p>
     </footer>
-    <script src="js/jquery-3.4.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>

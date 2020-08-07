@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-white">
+    <nav class="navbar navbar-expand-sm navbar-dark fondo-marca">
         <a class="navbar-brand" href="#">
             <img src="assets/PRADIANT.png" width="50" height="50" alt="">
             Pradiant Análisis y Consultoria
@@ -21,17 +21,18 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php"><i class="fa fa-home" aria-hidden="true"></i> Inicio <span
-                            class="sr-only"></span></a>
+                    <a class="nav-link" href="index.php"> Inicio <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-external-link-alt    "></i> Web <span
-                            class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#"> Web <span class="sr-only">(current)</span></a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Categoria 1</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sobre nosotros</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contactanos</a>
+                </li>
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Categoria 2</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId">
@@ -64,6 +65,15 @@ echo "<form action='busqueda.php' method='get' class='form-inline my-2 my-lg-0'>
                 </div>";
 try {
     require "modelo/conexion.php";
+    if (isset($_GET["pagina"])) {
+        if ($_GET["pagina"] == 1) {
+            header("Location:busqueda.php");
+        } else {
+            $pagina = $_GET["pagina"];
+        }
+    } else {
+        $pagina = 1;
+    }
     $consulta = "SELECT * FROM posts WHERE titulo LIKE '%$busqueda%'";
     $resultado = $conexion->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $resultado = $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -71,6 +81,12 @@ try {
     $resultado->bindParam(':busqueda', $busqueda, PDO::PARAM_STR, 20);
     $resultado->execute(array());
     $num_filas = $resultado->rowCount();
+    $tamagno_paginas = 3;
+    $empezar_desde = ($pagina - 1) * $tamagno_paginas;
+    $total_paginas = ceil($num_filas / $tamagno_paginas);
+    $consulta = "SELECT posts.*, categorias.nombre FROM posts LEFT JOIN categorias ON (posts.categoria = categorias.id) WHERE titulo LIKE '%$busqueda%' ORDER BY fecha DESC LIMIT $empezar_desde,$tamagno_paginas";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(array());
     if ($num_filas > 0) {
         while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
             echo "<div class='card bg-white shadow mb-3'>
@@ -96,13 +112,11 @@ try {
                </div>
 
            </div>
-           <div class='card-footer text-muted'>
-               <a name='asdasd' id='asdasd' class='btn btn-dark float-right' href='" . $registro["direccion"] . "'
-                   role='button'>
-                   Ir
-                   al
-                   post <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
-           </div>
+                         <div class='card-footer text-muted fondo-marca'>
+                                    <a name='asdasd' id='asdasd' class='btn btn-info float-right' href='" . $registro["direccion"] . "'
+                                        role='button'>
+                                        Leer mas <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
+                                </div>
        </div>";
         }
     } else {
@@ -117,19 +131,35 @@ try {
 ?>
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
+                                <?php
+echo "<li class='page-item ";
+if ($pagina == 1) {
+    echo "disabled";
+}
+echo "'>
+                            <a class='page-link' href='?pagina=" . ($pagina - 1) . "&busqueda=" . $busqueda . "' aria-label='Anterior'>
+                                <span aria-hidden='true'>&laquo;</span>
+                                <span class='sr-only'>Anterior</span>
+                            </a>
+                        </li>";
+for ($i = 1; $i <= $total_paginas; $i++) {
+    echo "<li class='page-item ";
+    if ($pagina == $i) {
+        echo "active";
+    }
+    echo "'><a class='page-link' href='?pagina=" . $i . "&busqueda=" . $busqueda . "'>" . $i . "</a></li>";
+    echo "\n";
+}
+echo "<li class='page-item ";
+if ($pagina == $total_paginas) {
+    echo "disabled";
+}
+echo "'>
+    <a class='page-link' href='?pagina=" . ($pagina + 1) . "&busqueda=" . $busqueda . "' aria-label='Siguiente'>
+        <span aria-hidden='true'>&raquo;</span>
+        <span class='sr-only'>Siguiente</span>
+    </a>";
+?>
                                 </li>
                             </ul>
                         </nav>
@@ -138,29 +168,42 @@ try {
                     <aside class="col-md-4 blog-sidebar">
 
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header text-white fondo-marca">
                                 <i class="fa fa-folder" aria-hidden="true"></i> Categorias
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <ol class="list-unstyled mb-0">
-                                            <li><a href="categoria.html">Asesoria</li>
-                                            <li><a href="#">-Administración</a></li>
-                                            <li><a href="#">Categoria 3</a></li>
-                                        </ol>
-                                    </div>
-                                    <div class="col-6">
-                                        <ol class="list-unstyled mb-0">
-                                            <li><a href="#">Categoria 4</a></li>
-                                            <li><a href="#">Categoria 5</a></li>
-                                        </ol>
-                                    </div>
-                                </div>
+                                <ol class="list-unstyled mb-0">
+                                    <?php
+try {
+    require "modelo/conexion.php";
+    $consulta = "SELECT * FROM categorias";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(array());
+    if ($resultado->rowCount() > 0) {
+        while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
+            echo "
+                <li>
+                <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0'>
+                <button name='categoria' value='" . $registro["nombre"] . "' class='btn btn-block btn-outline-info mb-1' type='submit'>
+                        " . $registro["nombre"] . "</button>
+                </form>
+                </li>
+            ";
+        }
+    } else {
+        echo "<div class='alert alert-success' role='alert'>
+          <h4 class='alert-heading'>Sin categorias</h4>
+        </div>";
+    }
+} catch (\Throwable $th) {
+    echo "ha ocurrido un error: " . $th;
+}
+?>
+                                </ol>
                             </div>
                         </div>
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header text-white fondo-marca">
                                 <i class="fa fa-star" aria-hidden="true"></i> Recomendados
                             </div>
                             <ul class="list-group list-group-flush">
@@ -171,7 +214,7 @@ try {
                         </div>
 
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header text-white fondo-marca">
                                 <i class="fa fa-heart" aria-hidden="true"></i> Buscanos en nuestras redes
                             </div>
                             <div class="card-body">

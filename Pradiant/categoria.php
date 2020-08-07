@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-white">
+    <nav class="navbar navbar-expand-sm navbar-dark fondo-marca">
         <a class="navbar-brand" href="#">
             <img src="assets/PRADIANT.png" width="50" height="50" alt="">
             Pradiant Análisis y Consultoria
@@ -21,12 +21,10 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio <span
-                            class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#"> Inicio <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-external-link-alt    "></i> Web <span
-                            class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#"> Web <span class="sr-only">(current)</span></a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Categoria 1</a>
@@ -52,7 +50,7 @@
 
                         <?php
 require "modelo/conexion.php";
-$categoria = mysqli_real_escape_string($conexion, $_GET["categoria"]);
+$categoria = $_GET["categoria"];
 echo "<h2 class='blog-post-title mb-3'>Categoria: " . $categoria . "</h2>
 <p class='blog-post-meta mr-2'><i class='fas fa-list    '></i> Entradas en esta categoria: #</p>
 <p class='blog-post-meta mr-2'><i class='fa fa-comments' aria-hidden='true'></i> Comentarios en
@@ -62,11 +60,27 @@ echo "<h2 class='blog-post-title mb-3'>Categoria: " . $categoria . "</h2>
 </div>";
 try {
     $consulta = "SELECT * FROM categorias WHERE nombre = '$categoria'";
-    $fila = mysqli_fetch_row(mysqli_query($conexion, $consulta));
-    $consulta = "SELECT * FROM posts WHERE categoria = '$fila[0]'";
-    $resultado = mysqli_query($conexion, $consulta);
-    if ($resultado) {
-        while ($registro = mysqli_fetch_assoc($resultado)) {
+    if (isset($_GET["pagina"])) {
+        if ($_GET["pagina"] == 1) {
+            header("Location:categoria.php?categoria=" . $categoria . "");
+        } else {
+            $pagina = $_GET["pagina"];
+        }
+    } else {
+        $pagina = 1;
+    }
+    $consulta = "SELECT * FROM posts";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(array());
+    $num_filas = $resultado->rowCount();
+    $tamagno_paginas = 3;
+    $empezar_desde = ($pagina - 1) * $tamagno_paginas;
+    $total_paginas = ceil($num_filas / $tamagno_paginas);
+    $consulta = "SELECT posts.*, categorias.nombre FROM posts LEFT JOIN categorias ON (posts.categoria = categorias.id) WHERE nombre = '$categoria' ORDER BY fecha DESC LIMIT $empezar_desde,$tamagno_paginas";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(array());
+    if ($num_filas > 0) {
+        while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
             echo "<div class='card bg-white shadow mb-3'>
             <div class='card-body'>
                <h2 class='blog-post-title'>" . $registro["titulo"] . "</h2>
@@ -90,17 +104,17 @@ try {
                </div>
 
            </div>
-           <div class='card-footer text-muted'>
-               <a name='asdasd' id='asdasd' class='btn btn-dark float-right' href='" . $registro["direccion"] . "'
-                   role='button'>
-                   Ir
-                   al
-                   post <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
-           </div>
+                         <div class='card-footer text-muted fondo-marca'>
+                                    <a name='asdasd' id='asdasd' class='btn btn-info float-right' href='" . $registro["direccion"] . "'
+                                        role='button'>
+                                        Leer mas <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
+                                </div>
        </div>";
         }
     } else {
-        echo "nada por aqui";
+        echo "<div class='jumbotron bg-white shadow'>
+            <h1 class='display-4'>Esta categoria esta vacia... Por ahora.</h1>
+        </div>";
     }
 } catch (\Throwable $th) {
     echo "ha ocurrido un error: " . $th;
@@ -109,19 +123,35 @@ try {
 
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
+                                <?php
+echo "<li class='page-item ";
+if ($pagina == 1) {
+    echo "disabled";
+}
+echo "'>
+                            <a class='page-link' href='?pagina=" . ($pagina - 1) . "&categoria=" . $categoria . "' aria-label='Anterior'>
+                                <span aria-hidden='true'>&laquo;</span>
+                                <span class='sr-only'>Anterior</span>
+                            </a>
+                        </li>";
+for ($i = 1; $i <= $total_paginas; $i++) {
+    echo "<li class='page-item ";
+    if ($pagina == $i) {
+        echo "active";
+    }
+    echo "'><a class='page-link' href='?pagina=" . $i . "&categoria=" . $categoria . "'>" . $i . "</a></li>";
+    echo "\n";
+}
+echo "<li class='page-item ";
+if ($pagina == $total_paginas) {
+    echo "disabled";
+}
+echo "'>
+    <a class='page-link' href='?pagina=" . ($pagina + 1) . "&categoria=" . $categoria . "' aria-label='Siguiente'>
+        <span aria-hidden='true'>&raquo;</span>
+        <span class='sr-only'>Siguiente</span>
+    </a>";
+?>
                                 </li>
                             </ul>
                         </nav>
@@ -129,64 +159,82 @@ try {
 
                     <aside class="col-md-4 blog-sidebar">
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header text-white fondo-marca">
                                 <i class="fa fa-search" aria-hidden="true"></i> Busqueda
                             </div>
                             <div class="card-body">
-                                <form class="form-inline my-2 my-lg-0">
-                                    <input class="form-control mr-sm-2" type="text"
+                                <form action="busqueda.php" method="get" class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="text" name="busqueda"
                                         placeholder="Escriba la entrada que desee consultar">
-                                    <a class="btn btn-outline-success my-2 my-sm-0" type="submit" role="button"
-                                        href="busqueda.html"><i class="fa fa-search" aria-hidden="true"></i> Buscar</a>
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i value="buscar"
+                                            class="fa fa-search" aria-hidden="true"></i>
+                                        Buscar</button>
                                 </form>
                             </div>
                         </div>
 
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header text-white fondo-marca">
                                 <i class="fa fa-folder" aria-hidden="true"></i> Categorias
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <ol class="list-unstyled mb-0">
-                                            <li><a href="categoria.html">Asesoria</li>
-                                            <li><a href="#">-Administración</a></li>
-                                            <li><a href="#">Categoria 3</a></li>
-                                        </ol>
-                                    </div>
-                                    <div class="col-6">
-                                        <ol class="list-unstyled mb-0">
-                                            <li><a href="#">Categoria 4</a></li>
-                                            <li><a href="#">Categoria 5</a></li>
-                                        </ol>
-                                    </div>
+                            <div class="card mb-3">
+                                <div class="card-header text-white fondo-marca">
+                                    <i class="fa fa-folder" aria-hidden="true"></i> Categorias
+                                </div>
+                                <div class="card-body">
+                                    <ol class="list-unstyled mb-0">
+                                        <?php
+try {
+    require "modelo/conexion.php";
+    $consulta = "SELECT * FROM categorias";
+    $resultado = $conexion->prepare($consulta);
+    $resultado->execute(array());
+    if ($resultado->rowCount() > 0) {
+        while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
+            echo "
+                <li>
+                <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0'>
+                <button name='categoria' value='" . $registro["nombre"] . "' class='btn btn-block btn-outline-info mb-1' type='submit'>
+                        " . $registro["nombre"] . "</button>
+                </form>
+                </li>
+            ";
+        }
+    } else {
+        echo "<div class='alert alert-success' role='alert'>
+          <h4 class='alert-heading'>Sin categorias</h4>
+        </div>";
+    }
+} catch (\Throwable $th) {
+    echo "ha ocurrido un error: " . $th;
+}
+?>
+                                    </ol>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-star" aria-hidden="true"></i> Recomendados
+                            <div class="card mb-3">
+                                <div class="card-header text-white fondo-marca">
+                                    <i class="fa fa-star" aria-hidden="true"></i> Recomendados
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Post 1</li>
+                                    <li class="list-group-item">Post 2</li>
+                                    <li class="list-group-item">Post 3</li>
+                                </ul>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Post 1</li>
-                                <li class="list-group-item">Post 2</li>
-                                <li class="list-group-item">Post 3</li>
-                            </ul>
-                        </div>
 
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-heart" aria-hidden="true"></i> Buscanos en nuestras redes
+                            <div class="card mb-3">
+                                <div class="card-header text-white fondo-marca">
+                                    <i class="fa fa-heart" aria-hidden="true"></i> Buscanos en nuestras redes
+                                </div>
+                                <div class="card-body">
+                                    <ol class="list-unstyled">
+                                        <li><a href="#"><i class="fab fa-instagram    "></i> Instagram</a></li>
+                                        <li><a href="#"><i class="fab fa-twitter    "></i> Twitter</a></li>
+                                        <li><a href="#"><i class="fab fa-facebook    "></i> Facebook</a></li>
+                                    </ol>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <ol class="list-unstyled">
-                                    <li><a href="#"><i class="fab fa-instagram    "></i> Instagram</a></li>
-                                    <li><a href="#"><i class="fab fa-twitter    "></i> Twitter</a></li>
-                                    <li><a href="#"><i class="fab fa-facebook    "></i> Facebook</a></li>
-                                </ol>
-                            </div>
-                        </div>
                     </aside><!-- /.blog-sidebar -->
 
                 </div><!-- /.row -->
