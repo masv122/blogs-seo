@@ -3,13 +3,19 @@ if (!isset($indexphp) and $indexphp !== true) {
     header('Location: /index.php');
     exit;
 }
-function cuadro_categoria($conexion)
+function cuadro_categoria($conexion, $miniatura)
 {
     ?>
 <div class="card mb-3">
+    <?php
+if ($miniatura) {
+        ?>
     <div class="card-header text-white fondo-marca">
         <i class="fa fa-folder" aria-hidden="true"></i> Categorias
     </div>
+
+    <?php
+}?>
     <div class="card-body">
         <ol class="list-unstyled mb-0">
             <?php
@@ -19,16 +25,13 @@ try {
         $resultado->execute(array());
         if ($resultado->rowCount() > 0) {
             while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-            <li>
-                <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0'>
-                    <button name='categoria' value='<?php echo $registro["nombre"]; ?>'
-                        class='btn btn-block btn-outline-info mb-1' type='submit'>
-                        <?php echo $registro["nombre"]; ?></button>
-                </form>
-            </li>
-            <?php
-}
+                if ($miniatura) {
+                    categoria_miniatura($registro);
+                } else {
+                    categoria($registro, true);
+                }
+
+            }
         } else {
             ?>
             <div class='alert alert-success' role='alert'>

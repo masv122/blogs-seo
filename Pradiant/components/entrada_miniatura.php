@@ -12,8 +12,8 @@ function entrada_miniatura($registro)
         <div class='d-flex'>
             <p class='blog-post-meta mr-2'><i class='fas fa-clock    '></i><?php echo $registro["fecha"] ?></p>
             <p class='blog-post-meta mr-2'><i class='fa fa-user' aria-hidden='true'></i> Fulanito</p>
-            <p class='blog-post-meta mr-2'><i class='fa fa-folder'
-                    aria-hidden='true'></i><?php echo $registro["categoria"] ?></p>
+            <p class='blog-post-meta mr-2'><i class='fa fa-folder' aria-hidden='true'></i>
+                <?php echo $registro["nombre_categoria"] ?></p>
             <p class='blog-post-meta mr-2'><i class='fa fa-comment' aria-hidden='true'></i> Comentarios
             </p>
         </div>
@@ -31,8 +31,8 @@ function entrada_miniatura($registro)
 
     </div>
     <div class='card-footer text-muted fondo-marca'>
-        <a name='asdasd' id='asdasd' class='btn btn-info float-right' href='<?php echo $registro["direccion"] ?>'
-            role='button'>
+        <a name='asdasd' id='asdasd' class='btn btn-outline-light float-right'
+            href='<?php echo $registro["direccion"] ?>' role='button'>
             Leer mas <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
     </div>
 </div>

@@ -124,7 +124,7 @@
                         <ol class="list-unstyled mb-0">
                             <?php
 try {
-    require "../modelo/conexion.php";
+    require "../model/conexion.php";
     $consulta = "SELECT * FROM categorias";
     $resultado = $conexion->prepare($consulta);
     $resultado->execute(array());
