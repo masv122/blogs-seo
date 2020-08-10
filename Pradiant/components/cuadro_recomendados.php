@@ -3,17 +3,19 @@ if (!isset($indexphp) and $indexphp !== true) {
     header('Location: /index.php');
     exit;
 }
+require_once "../controller/entradas_recomendadas.php";
 function cuadro_recomendados()
 {
+    global $conexion;
     ?>
 <div class="card mb-3">
     <div class="card-header text-white fondo-marca">
-        <i class="fa fa-star" aria-hidden="true"></i> Recomendados
+        <i class="fa fa-star" aria-hidden="true"></i> Te podria interesar
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Post 1</li>
-        <li class="list-group-item">Post 2</li>
-        <li class="list-group-item">Post 3</li>
-    </ul>
+    <div class="list-group">
+        <?php
+entradas_recomendadas($conexion);
+    ?>
+    </div>
 </div>
 <?php }
