@@ -3,10 +3,10 @@ if (!isset($indexphp) and $indexphp !== true) {
     header('Location: /index.php');
     exit;
 }
-function cuadro_categoria($conexion, $miniatura)
+function cuadro_categoria($conexion, $miniatura, $categoria)
 {
     ?>
-<div class="card mb-3">
+<div class="card mb-3 d-none d-md-block">
     <?php
 if ($miniatura) {
         ?>
@@ -16,34 +16,10 @@ if ($miniatura) {
 
     <?php
 }?>
-    <div class="card-body">
-        <ol class="list-unstyled mb-0">
-            <?php
-try {
-        $consulta = "SELECT * FROM categorias";
-        $resultado = $conexion->prepare($consulta);
-        $resultado->execute(array());
-        if ($resultado->rowCount() > 0) {
-            while ($registro = $resultado->fetch(PDO::FETCH_ASSOC)) {
-                if ($miniatura) {
-                    categoria_miniatura($registro);
-                } else {
-                    categoria($registro, true);
-                }
-
-            }
-        } else {
-            ?>
-            <div class='alert alert-success' role='alert'>
-                <h4 class='alert-heading'>Sin categorias</h4>
-            </div>"
-            <?php
-}
-    } catch (\Throwable $th) {
-        echo "ha ocurrido un error: " . $th;
-    }
+    <div class="list-group">
+        <?php
+cargar_categorias($conexion, $miniatura, $categoria);
     ?>
-        </ol>
     </div>
 </div>
 <?php }
