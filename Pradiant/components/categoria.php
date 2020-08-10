@@ -9,10 +9,11 @@ function categoria($categoria, $enlace)
 <div class="card bg-white shadow mb-3">
     <div class="card-body">
         <h2 class='blog-post-title mb-3'>Categoria:
-            <?php if ($enlace) {echo $categoria["nombre"];} else {echo $categoria;}?></h2>
-        <p class='blog-post-meta mr-2'><i class='fas fa-list    '></i> Entradas en esta categoria: #</p>
-        <p class='blog-post-meta mr-2'><i class='fa fa-comments' aria-hidden='true'></i> Comentarios en
-            esta categoria: #</p>
+            <?php echo $categoria["nombre"] ?></h2>
+        <p class='blog-post-meta mr-2'><i class='fas fa-list    '></i> Entradas en esta categoria:
+            <?php echo $categoria["cantidad"] ?></p>
+        <!-- <p class='blog-post-meta mr-2'><i class='fa fa-comments' aria-hidden='true'></i> Comentarios en
+            esta categoria: #</p> -->
     </div>
     <?php
 if ($enlace) {
