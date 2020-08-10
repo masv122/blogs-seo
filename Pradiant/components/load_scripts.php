@@ -6,6 +6,6 @@ if (!isset($indexphp) and $indexphp !== true) {
 function load_scripts()
 {
     ?>
-<script src="js/jquery-3.4.1.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 <?php }
