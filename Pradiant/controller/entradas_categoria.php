@@ -7,8 +7,7 @@ function entradas_categoria($conexion, $pagina, $categoria)
 {
     global $total_paginas;
     try {
-        $consulta = "SELECT * FROM categorias WHERE nombre = :categoria";
-        $consulta = "SELECT * FROM posts";
+        $consulta = "SELECT * FROM posts WHERE categoria = :categoria";
         $resultado = $conexion->prepare($consulta);
         $resultado->bindValue(':categoria', "{$categoria}");
         $resultado->execute();
@@ -16,7 +15,7 @@ function entradas_categoria($conexion, $pagina, $categoria)
         $tamagno_paginas = 3;
         $empezar_desde = ($pagina - 1) * $tamagno_paginas;
         $total_paginas = ceil($num_filas / $tamagno_paginas);
-        $consulta = "SELECT posts.*, categorias.nombre AS nombre_categoria FROM posts LEFT JOIN categorias ON (posts.categoria = categorias.id) WHERE nombre = :categoria ORDER BY fecha DESC LIMIT $empezar_desde,$tamagno_paginas";
+        $consulta = "SELECT posts.*, categorias.nombre AS nombre_categoria FROM posts LEFT JOIN categorias ON (posts.categoria = categorias.id) WHERE categoria = :categoria ORDER BY fecha DESC LIMIT $empezar_desde,$tamagno_paginas";
         $resultado = $conexion->prepare($consulta);
         $resultado->bindValue(':categoria', "{$categoria}");
 

@@ -39,7 +39,7 @@ if ($busqueda) {
 
             <aside class="col-md-4 blog-sidebar">
                 <?php
-cuadro_categoria($conexion, true);
+cuadro_categoria($conexion, true, null);
 cuadro_recomendados();
 cuadro_redes();
 ?>

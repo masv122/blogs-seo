@@ -30,7 +30,7 @@ paginacion($pagina, $total_paginas, null, null);
             <aside class="col-md-4 blog-sidebar">
                 <?php
 cuadro_busqueda(null);
-cuadro_categoria($conexion, true);
+cuadro_categoria($conexion, true, null);
 cuadro_recomendados();
 cuadro_redes();
 ?>
