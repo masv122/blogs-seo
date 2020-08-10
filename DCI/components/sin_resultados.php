@@ -29,8 +29,10 @@ function busqueda_sin_resultados()
 function sin_resultados($tipo)
 {
     ?>
-<div class='jumbotron bg-white shadow'>
-    <?php
+<div class="col-md-12">
+    <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+            <?php
 switch ($tipo) {
         case 'inicio':
             inicio_sin_entradas();
@@ -45,5 +47,7 @@ switch ($tipo) {
             break;
     }
     ?>
+        </div>
+    </div>
 </div>
 <?php }

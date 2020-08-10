@@ -6,10 +6,16 @@ if (!isset($indexphp) and $indexphp !== true) {
 function footer()
 {
     ?>
-<footer class="blog-footer p-3">
-    <p>Pradiant Análisis y Consultoria, todos los derechos reservados</p>
-    <p>
-        <a href="#">Volver arriba</a>
+<footer class="pt-3 px-3 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>DCI, todos los derechos reservados</p>
+                <p>
+            </div>
+
+        </div>
+    </div>
     </p>
 </footer>
 <?php }

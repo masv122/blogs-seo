@@ -8,43 +8,38 @@ function nav_bar()
 {
     global $inicio_page, $conexion;
     ?>
-<nav class="navbar navbar-expand-sm navbar-dark fondo-marca">
-    <a class="navbar-brand d-flex" href="#">
-        <img src="../assets/PRADIANT.png" width="50" height="50" alt="" class="mr-3">
-        <h3 class="d-none d-md-block">Pradiant Análisis y Consultoria</h3>
-    </a>
-    <form action='busqueda.php' method='get' class='ml-auto mr-2 d-md-none'>
-        <button class='btn btn-success my-2 my-sm-0' type='submit'><i value='buscar' class='fa fa-search'
-                aria-hidden='true'></i>
-        </button>
-    </form>
-    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
-        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"><span
-            class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
-        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item <?php if ($inicio_page) {
+<header class="blog-header bg-light py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-4 pt-1">
+            <a class="text-muted pl-3 <?php if ($inicio_page) {
         echo "active";
-    }?>">
-                <a class="nav-link" href="../index.php">Inicio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"> Web </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Sobre nosotros</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contactanos</a>
-            </li>
-            <li class="nav-item dropdown d-md-none">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">Categorias</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <?php cargar_categorias($conexion, true, null)?>
+    }?>" href="../index.php">Inicio</a>
+        </div>
+        <div class="col-4 text-center">
+            <a class="blog-header-logo text-dark" href="#">DCI</a>
+        </div>
+        <div class="col-4 d-flex justify-content-end align-items-center pr-4">
+            <form action='busqueda.php' method='get' class='mr-2'>
+                <button class='btn btn-dark my-2 my-sm-0' type='submit'><i value='buscar' class='fa fa-search'
+                        aria-hidden='true'></i>
+                </button>
+            </form>
+            <div class="dropdown open">
+                <button class="btn btn-dark dropdown-toggle no-" type="button" id="triggerId" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="triggerId">
+                    <a class="nav-link" href="#"> Web </a>
+                    <a class="nav-link" href="#">Sobre nosotros</a>
+                    <a class="nav-link" href="#">Contactanos</a>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
-</nav>
+</header>
+<div class="nav-scroller py-1 mb-2 bg-light">
+    <nav class="nav d-flex justify-content-between">
+        <?php cargar_categorias($conexion, true, null)?>
+    </nav>
+</div>
 <?php }

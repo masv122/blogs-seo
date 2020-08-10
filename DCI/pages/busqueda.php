@@ -17,41 +17,51 @@ head();
 ?>
 
 <body>
-    <?php
-nav_bar();
-?>
-    <br>
-    <br>
     <main role="main" class="container mb-3">
+        <?php
+nav_bar();
+cuadro_recomendados();
+?>
         <div class="row">
-            <div class="col-md-8 blog-main">
+            <div class="col-12 blog-main">
                 <?php
 cuadro_busqueda($busqueda);
 include_once "../controller/pagina.php";
+?>
+            </div><!-- /.blog-main -->
+
+        </div><!-- /.row -->
+        <div class="row mb-2">
+            <?php
 if ($busqueda) {
     entradas_busqueda($conexion, $pagina, $busqueda);
-    paginacion($pagina, $total_paginas, $busqueda, null);
 } else {
     busqueda_null();
 }
 ?>
-            </div><!-- /.blog-main -->
-
-            <aside class="col-md-4 blog-sidebar">
+        </div>
+        <?php
+paginacion($pagina, $total_paginas, $busqueda, null);
+?>
+        <div class="row">
+            <div class="col-md-6">
                 <?php
-cuadro_categoria($conexion, true, null);
-cuadro_recomendados();
 cuadro_redes();
 ?>
-            </aside><!-- /.blog-sidebar -->
+            </div>
+            <div class="col-md-6">
+                <?php
+cuadro_acerca();
+?>
+            </div>
 
         </div><!-- /.row -->
-
+        <?php
+footer();
+?>
         </div><!-- /.container -->
-
     </main>
     <?php
-footer();
 load_scripts();
 ?>
 </body>

@@ -8,6 +8,7 @@ require_once "../components/entrada_miniatura.php";
 require_once "../components/sin_resultados.php";
 require_once "../components/paginacion.php";
 require_once "../components/cuadro_busqueda.php";
+require_once "../components/cuadro_acerca.php";
 require_once "../components/nav_bar.php";
 require_once "../components/cuadro_categoria.php";
 require_once "../components/cuadro_recomendados.php";

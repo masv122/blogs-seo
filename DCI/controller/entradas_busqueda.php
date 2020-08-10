@@ -7,11 +7,11 @@ function entradas_busqueda($conexion, $pagina, $busqueda)
 {
     global $total_paginas;
     try {
-        $consulta = "SELECT * FROM posts WHERE titulo LIKE :busqueda";
+        $consulta = "SELECT COUNT(*) cant FROM posts WHERE titulo LIKE :busqueda";
         $resultado = $conexion->prepare($consulta);
         $resultado->bindValue(':busqueda', "%{$busqueda}%");
         $resultado->execute();
-        $num_filas = $resultado->rowCount();
+        $num_filas = $resultado->fetch(PDO::FETCH_ASSOC)["cant"];
         $tamagno_paginas = 3;
         $empezar_desde = ($pagina - 1) * $tamagno_paginas;
         $total_paginas = ceil($num_filas / $tamagno_paginas);

@@ -6,13 +6,14 @@ if (!isset($indexphp) and $indexphp !== true) {
 function entrada_recomendada($entrada)
 {
     ?>
-<a href="<?php echo $entrada["direccion"] ?>"
-    class="list-group-item list-group-item-action flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1"><?php echo $entrada["titulo"] ?></h5>
+<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+        <h4 class="display-5 font-italic">Te recomendamos leer</h4>
+        <h1 class="display-4 font-italic"><?php echo $entrada["titulo"] ?></h1>
         <small><?php echo $entrada["fecha"] ?></small>
+        <p class="lead my-3"><?php echo $entrada["resumen"] ?></p>
+        <p class="lead mb-0"><a href="<?php echo $entrada["direccion"] ?>" class="text-white font-weight-bold">Seguir
+                leyendo...</a></p>
     </div>
-    <!-- <p class="mb-1">Paragraph</p> -->
-    <small><?php echo $entrada["nombre_categoria"] ?></small>
-</a>
+</div>
 <?php }

@@ -18,45 +18,59 @@ head();
 ?>
 
 <body>
-    <?php
-nav_bar();
-?>
-    <br>
-    <br>
     <main role="main" class="container mb-3">
-        <div class="row">
-            <div class="col-md-8 blog-main">
-                <?php
+        <?php
+nav_bar();
+cuadro_recomendados();
+?>
+        <?php
 include_once "../controller/pagina.php";
 if ($categoria) {
     $categoria_objeto = categoria_cantidad($conexion, $categoria);
-    categoria($categoria_objeto, false);
-    entradas_categoria($conexion, $pagina, $categoria_objeto["id"]);
-    paginacion($pagina, $total_paginas, null, $categoria);
+    ?>
+        <div class="row">
+            <div class="col-12 blog-main">
+                <?php
+categoria($categoria_objeto, false);
+    ?>
+            </div><!-- /.blog-main -->
+        </div><!-- /.row -->
+        <div class="row">
+            <?php
+entradas_categoria($conexion, $pagina, $categoria_objeto["id"]);
+    ?>
+        </div><!-- /.row -->
+        <div class="row">
+            <div class="col-12 blog-main">
+                <?php
+paginacion($pagina, $total_paginas, null, $categoria);
+    ?>
+            </div><!-- /.blog-main -->
+        </div><!-- /.row -->
+        <?php
 } else {
-    cuadro_categoria($conexion, false, $categoria);
+    cargar_categorias($conexion, false, $categoria);
 }
 ?>
-            </div><!-- /.blog-main -->
-
-            <aside class="col-md-4 blog-sidebar">
+        <div class="row">
+            <div class="col-md-6">
                 <?php
-cuadro_busqueda(null);
-if ($categoria) {
-    cuadro_categoria($conexion, true, $categoria);
-}
-cuadro_recomendados();
 cuadro_redes();
 ?>
-            </aside><!-- /.blog-sidebar -->
+            </div>
+            <div class="col-md-6">
+                <?php
+cuadro_acerca();
+?>
+            </div>
 
         </div><!-- /.row -->
-
+        <?php
+footer();
+?>
         </div><!-- /.container -->
-
     </main>
     <?php
-footer();
 load_scripts();
 ?>
 </body>
