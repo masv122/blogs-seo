@@ -13,6 +13,6 @@ function head()
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/all.min.css">
-    <title>Pradiant blog</title>
+    <title>SFS blog</title>
 </head>
 <?php }

@@ -12,29 +12,36 @@ head();
 ?>
 
 <body>
-    <?php
+    <main role="main" class="container-fluid mb-3">
+        <div class="row">
+            <aside class="col-md-2 bg-light">
+                <?php
+nav_lateral();
+?>
+            </aside>
+            <div class="col-md-10 pt-3">
+                <?php
 nav_bar();
 ?>
-    <br>
-    <br>
-    <main role="main" class="container mb-3">
-        <div class="row">
-            <div class="col-md-8 blog-main">
-                <?php
+                <div class="row">
+                    <div class="col-md-9 blog-main">
+                        <?php
 include_once "../controller/pagina.php";
 entradas_inicio($conexion, $pagina);
 paginacion($pagina, $total_paginas, null, null);
 ?>
-            </div><!-- /.blog-main -->
+                    </div><!-- /.blog-main -->
 
-            <aside class="col-md-4 blog-sidebar">
-                <?php
+                    <aside class="col-md-3 blog-sidebar pt-5">
+                        <?php
 cuadro_busqueda(null);
-cuadro_categoria($conexion, true, null);
 cuadro_recomendados();
 cuadro_redes();
 ?>
-            </aside><!-- /.blog-sidebar -->
+                    </aside><!-- /.blog-sidebar -->
+                </div>
+
+            </div>
 
         </div><!-- /.row -->
 

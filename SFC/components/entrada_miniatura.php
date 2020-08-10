@@ -6,7 +6,7 @@ if (!isset($indexphp) and $indexphp !== true) {
 function entrada_miniatura($registro)
 {
     ?>
-<div class='card bg-white shadow mb-3'>
+<div class='card mb-3 border-0'>
     <div class='card-body'>
         <h2 class='blog-post-title'><?php echo $registro["titulo"] ?></h2>
         <div class='d-flex'>
@@ -18,7 +18,7 @@ function entrada_miniatura($registro)
             </p>
         </div>
 
-        <div class='container'>
+        <div class='container mb-5'>
             <div class='row'>
                 <div class='col-6 border'>
                     <h6>Imagen</h6>
@@ -28,11 +28,8 @@ function entrada_miniatura($registro)
                 </div>
             </div>
         </div>
-
-    </div>
-    <div class='card-footer text-muted fondo-marca'>
-        <a name='asdasd' id='asdasd' class='btn btn-outline-light float-right'
-            href='<?php echo $registro["direccion"] ?>' role='button'>
+        <a name='asdasd' id='asdasd' class='btn btn-outline-info' href='<?php echo $registro["direccion"] ?>'
+            role='button'>
             Leer mas <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
     </div>
 </div>

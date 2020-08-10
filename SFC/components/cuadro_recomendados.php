@@ -8,14 +8,13 @@ function cuadro_recomendados()
 {
     global $conexion;
     ?>
-<div class="card mb-3">
-    <div class="card-header text-white fondo-marca">
-        <i class="fa fa-star" aria-hidden="true"></i> Te podria interesar
+<div class="card mb-3 border-0">
+    <div class="card-header bg-white border-bottom border-secondary">
+        <h6>Te podria interesar</h6>
     </div>
-    <div class="list-group">
-        <?php
+    <br>
+    <?php
 entradas_recomendadas($conexion);
     ?>
-    </div>
 </div>
 <?php }

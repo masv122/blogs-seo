@@ -6,8 +6,7 @@ if (!isset($indexphp) and $indexphp !== true) {
 function entrada_recomendada($entrada)
 {
     ?>
-<a href="<?php echo $entrada["direccion"] ?>"
-    class="list-group-item list-group-item-action flex-column align-items-start">
+<a href="<?php echo $entrada["direccion"] ?>" class="mb-3 p-3 list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1"><?php echo $entrada["titulo"] ?></h5>
         <small><?php echo $entrada["fecha"] ?></small>
