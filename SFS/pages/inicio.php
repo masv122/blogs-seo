@@ -49,7 +49,6 @@ cuadro_redes();
 
     </main>
     <?php
-footer();
 load_scripts();
 ?>
 </body>
