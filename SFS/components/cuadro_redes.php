@@ -12,10 +12,13 @@ function cuadro_redes()
     </div>
     <br>
     <div>
-        <a name="" id="" class="btn btn-secondary" href="#" role="button"><i class="fab fa-facebook    "></i></a>
-        <a name="" id="" class="btn btn-secondary" href="#" role="button"><i class="fab fa-twitter    "></i>
+        <a name="" id="" class="btn btn-secondary rounded-circle" href="#" role="button"><i
+                class="fab fa-facebook    "></i></a>
+        <a name="" id="" class="btn btn-secondary rounded-circle" href="#" role="button"><i
+                class="fab fa-twitter    "></i>
         </a></a>
-        <a name="" id="" class="btn btn-secondary" href="#" role="button"><i class="fab fa-facebook    "></i>
+        <a name="" id="" class="btn btn-secondary rounded-circle" href="#" role="button"><i
+                class="fab fa-instagram    "></i>
         </a></a>
     </div>
 </div>

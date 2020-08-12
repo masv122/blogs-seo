@@ -24,13 +24,17 @@ function entrada_miniatura($registro)
                     <h6>Imagen</h6>
                 </div>
                 <div class='col-6'>
-                    <p class='card-text'><?php echo $registro["resumen"] ?></p>
+                    <p class='card-text'><?php echo $registro["resumen"] ?>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus enim reprehenderit ullam culpa
+                        error voluptates fuga, sunt repudiandae provident facilis odit eum maxime officia architecto.
+                        Veniam iure reprehenderit officia tempora.</p>
                 </div>
             </div>
         </div>
-        <a name='asdasd' id='asdasd' class='btn btn-outline-info' href='<?php echo $registro["direccion"] ?>'
-            role='button'>
-            Leer mas <i class='fa fa-arrow-circle-right' aria-hidden='true'></i></a>
+        <a name='asdasd' id='asdasd' class='btn border-0 btn-outline-secondary'
+            href='<?php echo $registro["direccion"] ?>' role='button'>
+            Leer mas</a>
     </div>
 </div>
+<hr class="border-bottom border-secondary">
 <?php }

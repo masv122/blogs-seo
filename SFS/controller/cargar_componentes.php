@@ -20,3 +20,4 @@ require_once "../components/categorias.php";
 require_once "../components/categoria_miniatura.php";
 require_once "../components/entrada_recomendada.php";
 require_once "../components/nav_lateral.php";
+require_once "../components/sidebar.php";

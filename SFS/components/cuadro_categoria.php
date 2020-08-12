@@ -6,7 +6,7 @@ if (!isset($indexphp) and $indexphp !== true) {
 function cuadro_categoria($conexion, $miniatura, $categoria)
 {
     ?>
-<div class="card mb-3 d-none d-md-block">
+<div class="card mb-3 border-0 d-none d-md-block">
     <?php
 if ($miniatura) {
         ?>

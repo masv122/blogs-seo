@@ -6,7 +6,7 @@ if (!isset($indexphp) and $indexphp !== true) {
 function categoria($categoria, $enlace)
 {
     ?>
-<div class="card bg-white shadow mb-3">
+<div class="card border-0 mb-3">
     <div class="card-body">
         <h2 class='blog-post-title mb-3'>Categoria:
             <?php echo $categoria["nombre"] ?></h2>
@@ -18,14 +18,13 @@ function categoria($categoria, $enlace)
     <?php
 if ($enlace) {
         ?>
-    <div class='card-footer text-muted fondo-marca'>
-        <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0 float-right'>
-            <button name='categoria' value='<?php echo $categoria["nombre"]; ?>' class='btn btn-outline-light mb-1'
-                type='submit'>
-                Ver entradas en esta categoria</button>
-        </form>
-    </div>
+    <form action='categoria.php' method='get' class='form-inline my-2 my-lg-0 float-right'>
+        <button name='categoria' value='<?php echo $categoria["nombre"]; ?>' class='btn border-0 btn-outline-secondary'
+            type='submit'>
+            Ver entradas en esta categoria</button>
+    </form>
     <?php }
     ?>
+    <hr class="border-bottom border-secondary">
 </div>
 <?php }

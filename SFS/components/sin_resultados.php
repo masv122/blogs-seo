@@ -29,7 +29,7 @@ function busqueda_sin_resultados()
 function sin_resultados($tipo)
 {
     ?>
-<div class='jumbotron bg-white shadow'>
+<div class='jumbotron bg-white border-0'>
     <?php
 switch ($tipo) {
         case 'inicio':
