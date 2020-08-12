@@ -18,20 +18,23 @@ head();
 ?>
 
 <body>
-    <main role="main" class="container-fluid mb-3">
+<?php
+sidebar();
+?>
+    <main role="main" class="container-fluid mb-3" id="main">
         <div class="row">
-            <aside class="col-md-2 bg-light">
+            <aside class="d-none d-lg-block col-md-2 bg-light" id="sidebar-left">
                 <?php
 nav_lateral();
 ?>
             </aside>
-            <div class="col-md-10 pt-1">
+            <div class="col-12 col-lg-10 pt-1" id="content-pane">
                 <?php
 nav_bar();
 ?>
-                <div class="row">
-                    <div class="col-md-9 blog-main">
-                        <?php
+                    <div class="row">
+                        <div class="col-md-9 blog-main">
+                            <?php
 include_once "../controller/pagina.php";
 if ($categoria) {
     $categoria_objeto = categoria_cantidad($conexion, $categoria);
@@ -42,20 +45,20 @@ if ($categoria) {
     cuadro_categoria($conexion, false, $categoria);
 }
 ?>
-                    </div><!-- /.blog-main -->
+                        </div><!-- /.blog-main -->
 
-                    <aside class="col-md-3 blog-sidebar pt-5">
-                        <?php
+                        <aside class="col-md-3 blog-sidebar pt-5">
+                            <?php
 cuadro_busqueda(null);
 cuadro_recomendados();
 cuadro_redes();
 ?>
-                    </aside><!-- /.blog-sidebar -->
+                        </aside><!-- /.blog-sidebar -->
+                    </div>
+
                 </div>
 
-            </div>
-
-        </div><!-- /.row -->
+            </div><!-- /.row -->
 
         </div><!-- /.container -->
 

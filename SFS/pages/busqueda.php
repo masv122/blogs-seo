@@ -17,14 +17,17 @@ head();
 ?>
 
 <body>
-    <main role="main" class="container-fluid mb-3">
+    <?php
+sidebar();
+?>
+    <main role="main" class="container-fluid mb-3" id="main">
         <div class="row">
-            <aside class="col-md-2 bg-light">
+            <aside class="d-none d-lg-block col-md-2 bg-light" id="sidebar-left">
                 <?php
 nav_lateral();
 ?>
             </aside>
-            <div class="col-md-10 pt-1">
+            <div class="col-12 col-lg-10 pt-1" id="content-pane">
                 <?php
 nav_bar();
 ?>

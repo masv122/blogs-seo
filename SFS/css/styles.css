@@ -1,5 +1,41 @@
 /* stylelint-disable selector-list-comma-newline-after */
 
+#sidebar {
+  width: 35%;
+  height: 100%;
+  position: fixed;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+}
+
+@media (max-width: 320px) {
+  #sidebar {
+    width: 75%;
+  }
+}
+
+@media (max-width: 375px) {
+  #sidebar {
+    width: 70%;
+  }
+}
+
+@media (max-width: 425px) {
+  #sidebar {
+    width: 60%;
+  }
+}
+
+main {
+  opacity: 80%;
+}
+
+.content-opacity {
+  opacity: 0.2;
+
+}
+
 .blog-header {
   line-height: 1;
   border-bottom: 1px solid #e5e5e5;

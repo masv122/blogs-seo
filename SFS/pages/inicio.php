@@ -15,7 +15,7 @@ head();
     <?php
 sidebar();
 ?>
-    <main role="main" class="container-fluid mb-3">
+    <main role="main" class="container-fluid mb-3" id="main">
         <div class="row">
             <aside class="d-none d-lg-block col-md-2 bg-light" id="sidebar-left">
                 <?php
