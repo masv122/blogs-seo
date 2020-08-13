@@ -6,16 +6,10 @@ if (!isset($indexphp) and $indexphp !== true) {
 function cuadro_redes()
 {
     ?>
-<div class="card mb-3">
-    <div class="card-header text-white fondo-marca">
-        <i class="fa fa-heart" aria-hidden="true"></i> Buscanos en nuestras redes
-    </div>
-    <div class="card-body">
-        <ol class="list-unstyled">
-            <li><a href="#"><i class="fab fa-instagram    "></i> Instagram</a></li>
-            <li><a href="#"><i class="fab fa-twitter    "></i> Twitter</a></li>
-            <li><a href="#"><i class="fab fa-facebook    "></i> Facebook</a></li>
-        </ol>
-    </div>
-</div>
+<h5 class="white-text">Siguenos en nuestras redes</h5>
+<ul>
+    <li><a href="#" class="white-text"><i class="fab fa-instagram    "></i> Instagram</a></li>
+    <li><a href="#" class="white-text"><i class="fab fa-twitter    "></i> Twitter</a></li>
+    <li><a href="#" class="white-text"><i class="fab fa-facebook    "></i> Facebook</a></li>
+</ul>
 <?php }

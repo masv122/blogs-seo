@@ -17,29 +17,30 @@ nav_bar();
 ?>
     <br>
     <br>
-    <main role="main" class="container mb-3">
-        <div class="row">
-            <div class="col-md-8 blog-main">
+    <main class="container">
+        <div class="section">
+            <div class="row">
                 <?php
 include_once "../controller/pagina.php";
 entradas_inicio($conexion, $pagina);
+?>
+
+                <!-- <aside class="col-md-4 blog-sidebar">
+                    <?php
+// cuadro_busqueda(null);
+// cuadro_categoria($conexion, true, null);
+// cuadro_recomendados();
+// cuadro_redes();
+?>
+                </aside>/.blog-sidebar -->
+
+            </div><!-- /.row -->
+            <div class="row">
+                <?php
 paginacion($pagina, $total_paginas, null, null);
 ?>
-            </div><!-- /.blog-main -->
-
-            <aside class="col-md-4 blog-sidebar">
-                <?php
-cuadro_busqueda(null);
-cuadro_categoria($conexion, true, null);
-cuadro_recomendados();
-cuadro_redes();
-?>
-            </aside><!-- /.blog-sidebar -->
-
-        </div><!-- /.row -->
-
+            </div>
         </div><!-- /.container -->
-
     </main>
     <?php
 footer();
