@@ -21,34 +21,28 @@ head();
 nav_bar();
 ?>
     <br>
-    <br>
-    <main role="main" class="container mb-3">
-        <div class="row">
-            <div class="col-md-8 blog-main">
+    <main class="container">
+        <div class="section">
+            <div class="row">
                 <?php
 cuadro_busqueda($busqueda);
 include_once "../controller/pagina.php";
 if ($busqueda) {
     entradas_busqueda($conexion, $pagina, $busqueda);
-    paginacion($pagina, $total_paginas, $busqueda, null);
+    ?>
+                <div class="row">
+                    <?php
+paginacion($pagina, $total_paginas, null, null);
+    ?>
+                </div>
+                <?php
 } else {
     busqueda_null();
 }
 ?>
             </div><!-- /.blog-main -->
 
-            <aside class="col-md-4 blog-sidebar">
-                <?php
-cuadro_categoria($conexion, true, null);
-cuadro_recomendados();
-cuadro_redes();
-?>
-            </aside><!-- /.blog-sidebar -->
-
         </div><!-- /.row -->
-
-        </div><!-- /.container -->
-
     </main>
     <?php
 footer();

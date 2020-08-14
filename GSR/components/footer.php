@@ -5,16 +5,19 @@ if (!isset($indexphp) and $indexphp !== true) {
 }
 function footer()
 {
+    global $busqueda_page;
     ?>
 <footer class="page-footer red darken-4">
     <div class="container">
         <div class="row">
-            <div class="col l5 s12">
+            <div class="col l3 s12">
                 <?php
-cuadro_busqueda(null);
+if (!$busqueda_page) {
+        cuadro_busqueda(null);
+    }
     ?>
             </div>
-            <div class="col l4 s12">
+            <div class="col l4 s12 offset-l2">
                 <h5 class="white-text">Mapa del sitio</h5>
                 <ul>
                     <li><a class="white-text" href="#!">Acerca de</a></li>

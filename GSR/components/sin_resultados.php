@@ -6,31 +6,34 @@ if (!isset($indexphp) and $indexphp !== true) {
 function inicio_sin_entradas()
 {
     ?>
-<h1 class='display-4'>
+<p>
     No se han subido post aun...
-</h1>
+</p>
 <?php
 }
 function categoria_sin_entradas()
 {
     ?>
-<h1 class='display-4'>
+<p>
     Esta categoria esta vacia... Por ahora.
-</h1>
+</p>
 <?php
 }
 function busqueda_sin_resultados()
 {
     ?>
-<h1 class='display-4'>Upss... Nada por aqui.</h1>
-<p class='lead'>Intenta con otra palabra clave.</p>
+<span class="card-title">Upss... Nada por aqui.</span>
+<p>Intenta con otra palabra clave.</p>
 <?php
 }
 function sin_resultados($tipo)
 {
     ?>
-<div class='jumbotron bg-white shadow'>
-    <?php
+<div class="row">
+    <div class="col s12 m6 offset-m3 red darken-4 z-depth-1">
+        <div class="card red darken-4 z-depth-0">
+            <div class="card-content white-text">
+                <?php
 switch ($tipo) {
         case 'inicio':
             inicio_sin_entradas();
@@ -45,5 +48,8 @@ switch ($tipo) {
             break;
     }
     ?>
+            </div>
+        </div>
+    </div>
 </div>
 <?php }

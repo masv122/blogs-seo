@@ -24,16 +24,6 @@ nav_bar();
 include_once "../controller/pagina.php";
 entradas_inicio($conexion, $pagina);
 ?>
-
-                <!-- <aside class="col-md-4 blog-sidebar">
-                    <?php
-// cuadro_busqueda(null);
-// cuadro_categoria($conexion, true, null);
-// cuadro_recomendados();
-// cuadro_redes();
-?>
-                </aside>/.blog-sidebar -->
-
             </div><!-- /.row -->
             <div class="row">
                 <?php

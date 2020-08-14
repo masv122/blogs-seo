@@ -23,37 +23,28 @@ nav_bar();
 ?>
     <br>
     <br>
-    <main role="main" class="container mb-3">
-        <div class="row">
-            <div class="col-md-8 blog-main">
+    <main class="container">
+        <div class="section">
+            <div class="row">
                 <?php
 include_once "../controller/pagina.php";
 if ($categoria) {
     $categoria_objeto = categoria_cantidad($conexion, $categoria);
     categoria($categoria_objeto, false);
     entradas_categoria($conexion, $pagina, $categoria_objeto["id"]);
-    paginacion($pagina, $total_paginas, null, $categoria);
+    ?>
+            </div><!-- /.row -->
+            <div class="row">
+                <?php
+paginacion($pagina, $total_paginas, null, null);
+    ?>
+            </div>
+            <?php
 } else {
     cuadro_categoria($conexion, false, $categoria);
 }
 ?>
-            </div><!-- /.blog-main -->
-
-            <aside class="col-md-4 blog-sidebar">
-                <?php
-cuadro_busqueda(null);
-if ($categoria) {
-    cuadro_categoria($conexion, true, $categoria);
-}
-cuadro_recomendados();
-cuadro_redes();
-?>
-            </aside><!-- /.blog-sidebar -->
-
-        </div><!-- /.row -->
-
         </div><!-- /.container -->
-
     </main>
     <?php
 footer();

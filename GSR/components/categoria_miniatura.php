@@ -6,7 +6,8 @@ if (!isset($indexphp) and $indexphp !== true) {
 function categoria_miniatura($categoria_registro, $categoria)
 {
     ?>
-<li class="tab <?php if ($categoria == $categoria_registro["nombre"]) {?>active<?php }?>"><a
-        href="#test1"><?php echo $categoria_registro["nombre"] ?></a>
+<li class="tab col s2 <?php if ($categoria == $categoria_registro["nombre"]) {echo "active";}?>">
+    <a
+        href="categoria.php?categoria=<?php echo $categoria_registro["nombre"]; ?>"><?php echo $categoria_registro["nombre"] ?></a>
 </li>
 <?php }

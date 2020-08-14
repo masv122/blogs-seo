@@ -9,7 +9,7 @@ function entrada_miniatura($registro)
 <div class="col s12 m4">
     <div class="card z-depth-5 hoverable">
         <div class="card-image">
-            <img src="../assets/rework1.jpg">
+            <img src="../assets/rework3.jpg">
             <span class="card-title"><?php echo $registro["titulo"] ?></span>
             <!-- <span class="card-title"><?php echo $registro["fecha"] ?></span>
             <span class="card-title"><?php echo $registro["nombre_categoria"] ?></span> -->

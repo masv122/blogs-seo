@@ -29,9 +29,17 @@ function cargar_categorias($conexion, $miniatura, $categoria)
             }
         } else {
             ?>
-<div class='alert alert-success' role='alert'>
-    <h4 class='alert-heading'>Sin categorias</h4>
-</div>"
+<div class="row">
+    <div class="col s12 m6 offset-m3 red darken-4 z-depth-1">
+        <div class="card red darken-4 z-depth-0">
+            <div class="card-content white-text">
+                <p>
+                    Sin categorias.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 }
     } catch (\Throwable $th) {
