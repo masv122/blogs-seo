@@ -17,7 +17,7 @@ function footer()
     </div>
     <div class="footer-copyright">
         <div class="container">
-            Copyright by <a class="orange-text text-lighten-3" href="http://materializecss.com">GSR, todos los
+            Copyright by <a class="orange-text text-lighten-3" href="http://materializecss.com">WFS, todos los
                 derechos reservados</a>
             <div class="grey-text text-lighten-4 right"> <?php
 cuadro_redes();
