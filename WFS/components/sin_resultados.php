@@ -22,7 +22,7 @@ function categoria_sin_entradas()
 function busqueda_sin_resultados()
 {
     ?>
-<span class="card-title">Upss... Nada por aqui.</span>
+<span class="card-title teal-text">Upss... Nada por aqui.</span>
 <p>Intenta con otra palabra clave.</p>
 <?php
 }
@@ -30,8 +30,8 @@ function sin_resultados($tipo)
 {
     ?>
 <div class="row">
-    <div class="col s12 m6 offset-m3 red darken-4 z-depth-1">
-        <div class="card red darken-4 z-depth-0">
+    <div class="col s12 grey darken-4 z-depth-1">
+        <div class="card grey darken-4 z-depth-0">
             <div class="card-content white-text">
                 <?php
 switch ($tipo) {

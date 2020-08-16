@@ -11,7 +11,7 @@ function entradas_inicio($conexion, $pagina)
         $resultado = $conexion->prepare($consulta);
         $resultado->execute(array());
         $num_filas = $resultado->rowCount();
-        $tamagno_paginas = 3;
+        $tamagno_paginas = 4;
         $empezar_desde = ($pagina - 1) * $tamagno_paginas;
         $total_paginas = ceil($num_filas / $tamagno_paginas);
         $consulta = "SELECT posts.*, categorias.nombre as nombre_categoria FROM posts LEFT JOIN categorias ON (posts.categoria = categorias.id) ORDER BY fecha DESC LIMIT $empezar_desde,$tamagno_paginas";

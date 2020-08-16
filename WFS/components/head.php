@@ -13,6 +13,7 @@ function head()
     <link rel="stylesheet" href="../css/all.min.css">
     <link href="../css/materialize.css" type="text/css" rel="stylesheet" />
     <link href="../css/style.css" type="text/css" rel="stylesheet" />
-    <title>GSR blog</title>
+    <link href="../css/spacing.css" type="text/css" rel="stylesheet" />
+    <title>WFS</title>
 </head>
 <?php }

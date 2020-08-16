@@ -21,6 +21,11 @@ head();
 nav_bar();
 ?>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <main class="container">
         <div class="section">
             <div class="row">
@@ -30,20 +35,22 @@ include_once "../controller/pagina.php";
 if ($busqueda) {
     entradas_busqueda($conexion, $pagina, $busqueda);
     ?>
-                <div class="row">
-                    <?php
-paginacion($pagina, $total_paginas, null, null);
-    ?>
-                </div>
+            </div><!-- /.row -->
+        </div>
+        <div class="divider"></div>
+        <div class="section">
+            <div class="row">
                 <?php
-} else {
-    busqueda_null();
+paginacion($pagina, $total_paginas, null, null);
 }
 ?>
-            </div><!-- /.blog-main -->
-
-        </div><!-- /.row -->
+            </div>
+        </div>
     </main>
+    <br>
+    <br>
+    <br>
+    <br>
     <?php
 footer();
 load_scripts();

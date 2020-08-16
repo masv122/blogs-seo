@@ -23,28 +23,42 @@ nav_bar();
 ?>
     <br>
     <br>
+    <br>
+    <br>
     <main class="container">
         <div class="section">
             <div class="row">
-                <?php
+                <div class="col s12">
+                    <?php
 include_once "../controller/pagina.php";
 if ($categoria) {
     $categoria_objeto = categoria_cantidad($conexion, $categoria);
     categoria($categoria_objeto, false);
-    entradas_categoria($conexion, $pagina, $categoria_objeto["id"]);
     ?>
-            </div><!-- /.row -->
+                </div><!-- /.row -->
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="section">
+            <div class="row">
+                <div class="col s12">
+                    <?php
+entradas_categoria($conexion, $pagina, $categoria_objeto["id"]);
+    ?>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="section">
             <div class="row">
                 <?php
 paginacion($pagina, $total_paginas, null, null);
-    ?>
-            </div>
-            <?php
 } else {
     cuadro_categoria($conexion, false, $categoria);
 }
 ?>
-        </div><!-- /.container -->
+            </div><!-- /.row -->
+        </div>
     </main>
     <?php
 footer();

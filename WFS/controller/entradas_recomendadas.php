@@ -12,22 +12,8 @@ function entradas_recomendadas($conexion)
         $resultado->execute(array());
         $num_entradas = $resultado->rowCount() - 1;
         $registros = $resultado->fetchAll(PDO::FETCH_ASSOC);
-        $entradas = array();
         $entrada = mt_rand(0, $num_entradas);
-        array_push($entradas, $entrada);
-        $i = 1;
-        while ($i <= 2) {
-            $entrada = mt_rand(0, $num_entradas);
-            if (in_array($entrada, $entradas)) {
-                continue;
-            } else {
-                array_push($entradas, $entrada);
-                $i++;
-            }
-        }
-        for ($i = 0; $i < 3; $i++) {
-            entrada_recomendada($registros[$entradas[$i]]);
-        }
+        entrada_recomendada($registros[$entrada]);
     } catch (\Throwable $th) {
         echo "ha ocurrido un error: " . $th;
     }
